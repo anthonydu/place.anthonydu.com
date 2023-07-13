@@ -1,56 +1,83 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import ScrollContainer from "react-indiana-drag-scroll";
+import {
+  TransformWrapper,
+  TransformComponent,
+  ReactZoomPanPinchRef,
+} from "react-zoom-pan-pinch";
+import Bar from "./Bar";
 
 export default function Canvas(props: any) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLElement>(null);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
+  const [color, setColor] = useState("#000000");
+  const [select, setSelect] = useState({ x: 0, y: 0 });
+  const CANVAS_SIZE = 100;
 
-  useEffect(() => {
-    const container = containerRef.current!;
+  function onTransformed(
+    ref: ReactZoomPanPinchRef,
+    state: {
+      scale: number;
+      positionX: number;
+      positionY: number;
+    },
+  ) {
+    setSelect({
+      x: Math.floor((window.innerWidth / 2 - state.positionX) / state.scale),
+      y: Math.floor((window.innerHeight / 2 - state.positionY) / state.scale),
+    });
 
-    container.scrollTo(
-      600 - window.innerWidth / 2,
-      600 - window.innerHeight / 2,
+    console.log(
+      state.positionX,
+      state.positionY,
+      window.innerWidth,
+      window.innerHeight,
     );
-  }, []);
+  }
 
-  useEffect(() => {
+  function onPlace() {
     const canvas = canvasRef.current!;
     const context = canvas.getContext("2d")!;
-    const container = containerRef.current!;
-
-    canvas.addEventListener("click", (event) => {
-      const rect = canvas.getBoundingClientRect();
-      const scaledX = event.clientX - rect.left;
-      const scaledY = event.clientY - rect.top;
-      const canvasX = Math.floor(scaledX / 10);
-      const canvasY = Math.floor(scaledY / 10);
-
-      setX(rect.left + canvasX * 10 + container.scrollLeft);
-      setY(rect.top + canvasY * 10 + container.scrollTop);
-    });
-  });
+    context.fillStyle = color;
+    context.fillRect(select.x, select.y, 1, 1);
+  }
 
   return (
-    <ScrollContainer
-      className="relative h-screen w-screen"
-      innerRef={containerRef}
+    <TransformWrapper
+      initialScale={10}
+      maxScale={30}
+      centerOnInit={true}
+      onTransformed={onTransformed}
+      limitToBounds={false}
+      wheel={{ smoothStep: 0.01 }}
+      minPositionX={-1300}
+      minPositionY={-1400}
+      maxPositionX={window.innerWidth / 2}
+      maxPositionY={window.innerHeight / 2}
     >
-      <canvas
-        className="m-[100px] h-[1000px] w-[1000px] shadow-2xl"
-        ref={canvasRef}
-        width={100}
-        height={100}
-        style={{ imageRendering: "pixelated" }}
-      ></canvas>
-      <div
-        className={`absolute z-50 h-[10px] w-[10px] border shadow`}
-        style={{ left: x, top: y, backgroundColor: props.color }}
-      ></div>
-    </ScrollContainer>
+      <TransformComponent wrapperStyle={{ width: "100vw", height: "100vh" }}>
+        <canvas
+          className="border-[0.5px] shadow-2xl"
+          ref={canvasRef}
+          width={CANVAS_SIZE}
+          height={CANVAS_SIZE}
+          style={{ imageRendering: "pixelated" }}
+        ></canvas>
+        <div
+          className={`absolute box-content h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 scale-[0.1] border-2`}
+          style={{
+            left: select.x + 1,
+            top: select.y + 1,
+            backgroundColor: color,
+          }}
+        ></div>
+      </TransformComponent>
+      <Bar
+        className="fixed bottom-5 left-1/2 flex -translate-x-1/2 -translate-y-1/2"
+        color={color}
+        setColor={setColor}
+        onPlace={onPlace}
+      ></Bar>
+    </TransformWrapper>
   );
 }
