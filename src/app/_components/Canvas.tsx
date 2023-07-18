@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import {
   TransformWrapper,
@@ -9,38 +11,35 @@ import Select from "./Select";
 export default function Canvas(props: any) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<ReactZoomPanPinchRef>(null);
-  const [select, setSelect] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(0);
   const {
-    color,
-    placing,
-    setPlacing,
     size,
     pixelSize,
+    select,
+    setSelect,
+    changeListener,
+    fetch,
   }: {
-    color: string;
-    placing: boolean;
-    setPlacing: (placing: boolean) => void;
     size: number;
     pixelSize: number;
+    select: { x: number; y: number };
+    setSelect: (select: { x: number; y: number }) => void;
+    changeListener: number;
+    fetch: () => Promise<[{ x: number; y: number; color: number }]>;
   } = props;
 
   // Place the colors
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const context = canvas.getContext("2d")!;
-
-    if (placing) {
-      context.fillStyle = color;
-      context.fillRect(
-        select.x * pixelSize,
-        select.y * pixelSize,
-        pixelSize,
-        pixelSize,
-      );
-      setPlacing(false);
-    }
-  }, [color, placing, setPlacing, select, pixelSize]);
+    const context = canvasRef.current?.getContext("2d")!;
+    context.clearRect(0, 0, size, size);
+    fetch().then((rows) => {
+      rows.map(({ x, y, color }) => {
+        context.fillStyle = `#${color.toString(16).padStart(6, "0")}`;
+        context.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changeListener]);
 
   // Calculate the selected pixel
   function onTransformed(
@@ -57,7 +56,6 @@ export default function Canvas(props: any) {
       y: Math.floor((window.innerHeight / 2 - positionY) / scale / pixelSize),
     });
     setScale(scale);
-    console.log(positionX, positionY, scale);
   }
 
   // Handle click to focus on pixel
@@ -84,10 +82,9 @@ export default function Canvas(props: any) {
 
   return (
     <TransformWrapper
-      initialScale={10 / pixelSize}
+      initialScale={25 / pixelSize}
       minScale={1 / pixelSize}
       maxScale={50 / pixelSize}
-      minPositionX={0}
       centerOnInit={true}
       onTransformed={onTransformed}
       limitToBounds={false}

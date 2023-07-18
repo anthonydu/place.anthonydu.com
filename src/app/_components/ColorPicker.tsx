@@ -5,7 +5,7 @@ export default function ColorPicker(props: any) {
     onCancel,
   }: {
     colors: string[];
-    onPick: (color: string) => void;
+    onPick: (color: number) => void;
     onCancel: () => void;
   } = props;
 
@@ -20,7 +20,7 @@ export default function ColorPicker(props: any) {
               className={`h-8 w-auto border`}
               style={{ backgroundColor: color }}
               key={color}
-              onClick={() => onPick(color)}
+              onClick={() => onPick(parseInt(color.split("#")[1], 16))}
             ></li>
           );
         })}
