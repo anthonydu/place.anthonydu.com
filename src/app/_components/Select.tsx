@@ -1,7 +1,7 @@
 export default function Select(props: any) {
   return (
     <div
-      className={`h-[10px] w-[10px] opacity-50 ${props.className}`}
+      className={`h-[10px] w-[10px] origin-top-left opacity-50 ${props.className}`}
       style={props.style}
     >
       <div className={`absolute left-0 top-0 grid h-full w-full grid-cols-2`}>

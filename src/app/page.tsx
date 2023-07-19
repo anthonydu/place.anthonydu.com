@@ -61,14 +61,14 @@ export default function Home() {
         width="100vw"
         height="100vh"
         size={500}
-        pixelSize={10}
+        pixelSize={8}
         changeListener={changeListener}
         fetch={fetch}
         select={select}
         setSelect={setSelect}
       ></Canvas>
       <button
-        className={`fixed bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
+        className={`absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
         onClick={() => setPicking(true)}
       >
         Place&nbsp;a&nbsp;Pixel

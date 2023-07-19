@@ -119,7 +119,7 @@ export default function Canvas(props: any) {
         ></Select>
       </TransformComponent>
       <p
-        className={`fixed left-1/2 top-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
+        className={`absolute left-1/2 top-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
       >
         ({select.x},{select.y})&nbsp;{scale}x
       </p>
