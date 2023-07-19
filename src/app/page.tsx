@@ -21,7 +21,7 @@ export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   supabase
-    .channel("schema-db-changes")
+    .channel("*")
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "canvas" },
@@ -43,7 +43,6 @@ export default function Home() {
         dialogRef.current?.close();
       }, 3000);
     }
-    return data;
   }
 
   async function fetch() {
