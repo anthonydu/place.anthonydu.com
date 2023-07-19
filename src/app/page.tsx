@@ -37,6 +37,7 @@ export default function Home() {
       .insert([{ x: x, y: y, color: color }])
       .select();
     console.log("Inserted: ", data, error);
+    setChangeListener(fetch());
     if (data == null) {
       dialogRef.current?.showModal();
       setTimeout(() => {
