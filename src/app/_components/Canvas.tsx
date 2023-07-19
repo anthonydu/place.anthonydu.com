@@ -18,21 +18,21 @@ export default function Canvas(props: any) {
     select,
     setSelect,
     changeListener,
-    fetch,
+    fetchCanvas,
   }: {
     size: number;
     pixelSize: number;
     select: { x: number; y: number };
     setSelect: (select: { x: number; y: number }) => void;
     changeListener: number;
-    fetch: () => Promise<[{ x: number; y: number; color: number }]>;
+    fetchCanvas: () => Promise<[{ x: number; y: number; color: number }]>;
   } = props;
 
   // Place the colors
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d")!;
     context.clearRect(0, 0, size, size);
-    fetch().then((rows) => {
+    fetchCanvas().then((rows) => {
       rows.map(({ x, y, color }) => {
         context.fillStyle = `#${color.toString(16).padStart(6, "0")}`;
         context.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);

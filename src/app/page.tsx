@@ -6,6 +6,7 @@ import ColorPicker from "./_components/ColorPicker";
 import { createClient } from "@supabase/supabase-js";
 import { colors } from "./colors.json";
 import Dialog from "./_components/Dialog";
+import Script from "next/script";
 
 const supabase = createClient(
   "https://rgghvleqgupatnabbmha.supabase.co",
@@ -32,12 +33,15 @@ export default function Home() {
     .subscribe();
 
   async function insert(x: number, y: number, color: number) {
+    const ip = await Promise.resolve(
+      (await fetch("https://api.ipify.org")).text(),
+    );
     const { data, error } = await supabase
       .from("canvas")
-      .insert([{ x: x, y: y, color: color }])
+      .insert([{ x: x, y: y, color: color, ip: ip }])
       .select();
     console.log("Inserted: ", data, error);
-    setChangeListener(fetch());
+    setChangeListener(fetchCanvas());
     if (data == null) {
       dialogRef.current?.showModal();
       setTimeout(() => {
@@ -46,7 +50,7 @@ export default function Home() {
     }
   }
 
-  async function fetch() {
+  async function fetchCanvas() {
     const { data, error } = await supabase.rpc("latest_canvas");
     console.log("Fetched: ", data, error);
     if (data === null) {
@@ -63,7 +67,7 @@ export default function Home() {
         size={500}
         pixelSize={8}
         changeListener={changeListener}
-        fetch={fetch}
+        fetchCanvas={fetchCanvas}
         select={select}
         setSelect={setSelect}
       ></Canvas>
