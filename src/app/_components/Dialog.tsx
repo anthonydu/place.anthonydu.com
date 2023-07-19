@@ -1,18 +1,12 @@
 import { forwardRef } from "react";
 
-const Dialog = forwardRef<HTMLDialogElement>((_props, ref) => {
+const Dialog = forwardRef<
+  HTMLDialogElement,
+  React.HTMLProps<HTMLDialogElement>
+>((props, ref) => {
   return (
-    <dialog
-      className="flex h-48 w-80 flex-col items-center justify-center rounded-lg border bg-white shadow"
-      ref={ref}
-    >
-      <p className="text-center">
-        Connection failed!
-        <br />
-        Please check your internet
-        <br />
-        connection and try again.
-      </p>
+    <dialog className="rounded-lg border bg-white p-10 text-center" ref={ref}>
+      <div className="flex flex-col items-center gap-2">{props.children}</div>
     </dialog>
   );
 });

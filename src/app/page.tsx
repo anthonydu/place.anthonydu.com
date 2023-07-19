@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Canvas from "./_components/Canvas";
 import ColorPicker from "./_components/ColorPicker";
 import { createClient } from "@supabase/supabase-js";
 import { colors } from "./colors.json";
 import Dialog from "./_components/Dialog";
-import Script from "next/script";
 
 const supabase = createClient(
   "https://rgghvleqgupatnabbmha.supabase.co",
@@ -19,7 +18,9 @@ export default function Home() {
   const [changeListener, setChangeListener] = useState<{
     [key: string]: any;
   }>();
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [name, setName] = useState("");
+  const disconnectRef = useRef<HTMLDialogElement>(null);
+  const nameRef = useRef<HTMLDialogElement>(null);
 
   supabase
     .channel("*")
@@ -33,19 +34,27 @@ export default function Home() {
     .subscribe();
 
   async function insert(x: number, y: number, color: number) {
-    const ip = await Promise.resolve(
-      (await fetch("https://api.ipify.org")).text(),
-    );
+    let res;
+    try {
+      res = await fetch("https://api.ipify.org");
+    } catch {
+      disconnectRef.current?.showModal();
+      setTimeout(() => {
+        disconnectRef.current?.close();
+      }, 3000);
+      return;
+    }
+    const ip = await Promise.resolve(res.text());
     const { data, error } = await supabase
       .from("canvas")
-      .insert([{ x: x, y: y, color: color, ip: ip }])
+      .insert([{ x: x, y: y, color: color, ip: ip, name: name }])
       .select();
     console.log("Inserted: ", data, error);
     setChangeListener(fetchCanvas());
     if (data == null) {
-      dialogRef.current?.showModal();
+      disconnectRef.current?.showModal();
       setTimeout(() => {
-        dialogRef.current?.close();
+        disconnectRef.current?.close();
       }, 3000);
     }
   }
@@ -54,10 +63,14 @@ export default function Home() {
     const { data, error } = await supabase.rpc("latest_canvas");
     console.log("Fetched: ", data, error);
     if (data === null) {
-      dialogRef.current?.showModal();
+      disconnectRef.current?.showModal();
     }
     return data;
   }
+
+  useEffect(() => {
+    nameRef.current?.showModal();
+  }, []);
 
   return (
     <main className="font-['Trebuchet_MS']">
@@ -90,7 +103,51 @@ export default function Home() {
         }}
         onCancel={() => setPicking(false)}
       ></ColorPicker>
-      <Dialog ref={dialogRef}></Dialog>
+      <Dialog ref={disconnectRef}>
+        <p className="text-center">
+          Connection failed!
+          <br />
+          Please check your internet
+          <br />
+          connection and try again.
+        </p>
+      </Dialog>
+      <Dialog ref={nameRef}>
+        <label htmlFor="name">What is your name?</label>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+            if (e.currentTarget.nextSibling?.nodeName === "P") {
+              e.currentTarget.nextSibling?.remove();
+            }
+          }}
+          className="invalid:border-red rounded border px-1"
+          autoFocus
+        />
+        <button
+          className="rounded border px-2 transition-all hover:border-black"
+          onClick={(e) => {
+            if (name !== "") {
+              nameRef.current?.close();
+            } else if (e.currentTarget.previousSibling?.nodeName !== "P") {
+              (
+                e.currentTarget.previousSibling as HTMLElement
+              ).style.borderColor = "red";
+              const p = document.createElement("p");
+              p.innerHTML = "Name cannot be empty.";
+              p.style.color = "red";
+              p.style.fontSize = "small";
+              p.style.margin = "-0.5rem 0";
+              e.currentTarget.previousSibling?.after(p);
+            }
+          }}
+        >
+          Start Placing
+        </button>
+      </Dialog>
     </main>
   );
 }
