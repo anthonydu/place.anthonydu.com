@@ -100,6 +100,9 @@ export default function Home() {
   // show name modal on load
   useEffect(() => {
     nameRef.current?.showModal();
+    document.addEventListener("visibilitychange", () => {
+      setChangeListener(document.visibilityState);
+    });
   }, []);
 
   return (

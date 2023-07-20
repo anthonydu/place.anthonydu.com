@@ -30,7 +30,7 @@ export default function ColorPicker(props: any) {
           {colors.map((color) => {
             return (
               <li
-                className={`h-8 w-auto border`}
+                className={`h-8 w-auto cursor-pointer border`}
                 style={{ backgroundColor: color }}
                 key={color}
                 onClick={() => {

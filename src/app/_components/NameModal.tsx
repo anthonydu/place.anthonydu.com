@@ -15,6 +15,7 @@ const NameModal = forwardRef<HTMLDialogElement, any>((props, ref) => {
       <form
         className="flex flex-col items-center gap-4"
         onSubmit={(e) => e.preventDefault()}
+        autoComplete="on"
       >
         <label htmlFor="name">
           What is your name?
@@ -24,6 +25,7 @@ const NameModal = forwardRef<HTMLDialogElement, any>((props, ref) => {
         <input
           type="text"
           name="name"
+          autoComplete="name"
           value={userName}
           onChange={(e) => {
             setUserName(e.target.value);
