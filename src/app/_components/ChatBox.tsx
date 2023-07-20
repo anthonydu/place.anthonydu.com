@@ -4,14 +4,14 @@ import Loading from "./Loading";
 export default function ChatBox(props: any) {
   const {
     fetchMessages,
-    name,
+    userName,
     onSend,
     changeListener,
   }: {
     fetchMessages: () => Promise<
       [{ id: number; sender_name: string; body_text: string }]
     >;
-    name: string;
+    userName: string;
     onSend: (message: string) => Promise<void>;
     changeListener: any;
   } = props;
@@ -54,20 +54,24 @@ export default function ChatBox(props: any) {
           ref={scrollRef}
         >
           {messages?.map(({ id, sender_name, body_text }) => {
-            const align = name === sender_name ? "end" : "start";
+            const nameMatches = userName === sender_name;
+            const align = nameMatches ? "end" : "start";
             let anonId = 0;
             new TextEncoder().encode(sender_name).forEach((n) => {
               anonId += n;
             });
+            const displayName = nameMatches
+              ? `${userName} (anon_${anonId})`
+              : `anon_${anonId}`;
             scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
             return (
               <div
-                className="flex flex-col"
+                className="flex max-w-[80%] flex-col"
                 key={id}
                 style={{ alignItems: align, alignSelf: align }}
               >
                 <p style={{ textAlign: align }}>
-                  <small>{"anon_" + anonId}</small>
+                  <small>{displayName}</small>
                 </p>
                 <p className="w-fit rounded bg-slate-200 px-2 py-1">
                   {body_text}

@@ -119,7 +119,7 @@ export default function Home() {
       ></Canvas>
 
       <ChatBox
-        name={userName}
+        userName={userName}
         fetchMessages={fetchMessages}
         changeListener={changeListener}
         onSend={(message: string) => insertMessages(userName, message)}
