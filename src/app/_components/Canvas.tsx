@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import {
   TransformWrapper,
   TransformComponent,
@@ -23,8 +21,8 @@ export default function Canvas(props: any) {
     size: number;
     pixelSize: number;
     select: { x: number; y: number };
-    setSelect: (select: { x: number; y: number }) => void;
-    changeListener: number;
+    setSelect: Dispatch<SetStateAction<{ x: number; y: number }>>;
+    changeListener: any;
     fetchCanvas: () => Promise<[{ x: number; y: number; color: number }]>;
   } = props;
 
@@ -119,7 +117,7 @@ export default function Canvas(props: any) {
         ></Select>
       </TransformComponent>
       <p
-        className={`absolute left-1/2 top-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
+        className={`absolute left-1/2 top-6 -translate-x-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
       >
         ({select.x},{select.y})&nbsp;{scale}x
       </p>
