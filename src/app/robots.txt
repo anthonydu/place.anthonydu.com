@@ -1,0 +1,15 @@
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://place.anthonydu.com/sitemap.xml
