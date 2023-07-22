@@ -1,8 +1,10 @@
-export default function Select(props: any) {
+import { ComponentProps } from "react";
+
+export default function Select(props: ComponentProps<"div">) {
   return (
     <div
       className={`h-[10px] w-[10px] origin-top-left opacity-50 ${props.className}`}
-      style={props.style}
+      {...props}
     >
       <div className={`absolute left-0 top-0 grid h-full w-full grid-cols-2`}>
         <div className={`mb-px mr-px border-l border-t border-black`}></div>

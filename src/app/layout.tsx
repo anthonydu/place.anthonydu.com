@@ -3,8 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "An r/place Clone | by Anthony Du",
-  description: "A realtime r/place clone with live chat, made by Anthony Du.",
   metadataBase: new URL("https://place.anthonydu.com"),
   robots: {
     index: false,
@@ -14,17 +12,6 @@ export const metadata: Metadata = {
       follow: true,
       noarchive: true,
     },
-  },
-  openGraph: {
-    title: "An r/place Clone",
-    description: "A realtime r/place clone with live chat, made by Anthony Du.",
-    url: "/",
-    siteName: "Anthony Du",
-    locale: "en_US",
-    type: "website",
-  },
-  alternates: {
-    canonical: "/",
   },
 };
 

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   TransformWrapper,
   TransformComponent,
@@ -6,25 +6,28 @@ import {
 } from "react-zoom-pan-pinch";
 import Select from "./Select";
 
-export default function Canvas(props: any) {
+export default function Canvas({
+  width,
+  height,
+  size,
+  pixelSize,
+  select,
+  setSelect,
+  changeListener,
+  fetchCanvas,
+}: {
+  width: string;
+  height: string;
+  size: number;
+  pixelSize: number;
+  select: { x: number; y: number };
+  setSelect: (select: { x: number; y: number }) => void;
+  changeListener: any;
+  fetchCanvas: () => Promise<[{ x: number; y: number; color: number }]>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<ReactZoomPanPinchRef>(null);
   const [scale, setScale] = useState(0);
-  const {
-    size,
-    pixelSize,
-    select,
-    setSelect,
-    changeListener,
-    fetchCanvas,
-  }: {
-    size: number;
-    pixelSize: number;
-    select: { x: number; y: number };
-    setSelect: Dispatch<SetStateAction<{ x: number; y: number }>>;
-    changeListener: any;
-    fetchCanvas: () => Promise<[{ x: number; y: number; color: number }]>;
-  } = props;
 
   // Place the colors
   useEffect(() => {
@@ -92,8 +95,8 @@ export default function Canvas(props: any) {
     >
       <TransformComponent
         wrapperStyle={{
-          width: props.width,
-          height: props.height,
+          width: width,
+          height: height,
           backgroundColor: "dimgray",
         }}
       >

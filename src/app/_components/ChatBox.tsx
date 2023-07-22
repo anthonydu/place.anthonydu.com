@@ -1,21 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import Loading from "./Loading";
 
-export default function ChatBox(props: any) {
-  const {
-    fetchMessages,
-    userName,
-    onSend,
-    changeListener,
-  }: {
-    fetchMessages: () => Promise<
-      [{ id: number; sender_name: string; body_text: string }]
-    >;
-    userName: string;
-    onSend: (message: string) => Promise<void>;
-    changeListener: any;
-  } = props;
-
+export default function ChatBox({
+  fetchMessages,
+  userName,
+  onSend,
+  changeListener,
+}: {
+  fetchMessages: () => Promise<
+    [{ id: number; sender_name: string; body_text: string }]
+  >;
+  userName: string;
+  onSend: (message: string) => Promise<void>;
+  changeListener: any;
+}) {
   const [chatting, setChatting] = useState(false);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -109,19 +107,19 @@ export default function ChatBox(props: any) {
   );
 }
 
-function ChatIcon(props: any) {
+function ChatIcon(props: ComponentProps<"svg">) {
   return (
     <svg
-      className={props.className}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M7 4C4.79086 4 3 5.79073 3 7.9997V13.2642C3 15.4732 4.79086 17.2639 7 17.2639L7 19.8998C7 19.9834 7.09639 20.0301 7.16197 19.9783L10.6 17.2639H17C19.2091 17.2639 21 15.4732 21 13.2642V7.99971C21 5.79073 19.2091 4 17 4H7Z"
         stroke="#000000"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M9 11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10C8.55228 10 9 10.4477 9 11Z"
