@@ -22,7 +22,7 @@ async function getPublicIpAddress() {
   }
 }
 
-export default function Place({ userAgent }: { userAgent: string | null }) {
+export default function Place() {
   const [userName, setUserName] = useState("");
   // coords of pixel selected
   const [select, setSelect] = useState({ x: 0, y: 0 });
@@ -126,11 +126,7 @@ export default function Place({ userAgent }: { userAgent: string | null }) {
         onPick={(color: number) => insertCanvas(select.x, select.y, color)}
       ></ColorPicker>
 
-      <NameModal
-        userName={userName}
-        setUserName={setUserName}
-        userAgent={userAgent}
-      ></NameModal>
+      <NameModal userName={userName} setUserName={setUserName}></NameModal>
 
       <Modal className={disconnected ? "" : "hidden"}>
         <div className="flex flex-col items-center gap-2">

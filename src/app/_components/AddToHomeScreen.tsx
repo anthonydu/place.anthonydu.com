@@ -1,13 +1,26 @@
 import Image from "next/image";
-import { ComponentProps } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 
 export default function AddToHomeScreen({
   className,
   ...props
 }: ComponentProps<"div">) {
+  const [isIos, setIsIos] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    setIsIos(
+      window.navigator.userAgent.includes("iPhone") ||
+        window.navigator.userAgent.includes("iPad"),
+    );
+    setIsInstalled((window.navigator as any).standalone);
+  }, []);
+
   return (
     <div
-      className={`fixed bottom-0 left-1/2 flex w-screen -translate-x-1/2 flex-row items-center justify-center gap-3 border-t bg-white p-4 font-[-apple-system] ${className}`}
+      className={`fixed bottom-0 left-1/2 flex w-screen -translate-x-1/2 flex-row items-center justify-center gap-3 border-t bg-white p-4 font-[-apple-system] font-light transition-all ${
+        isIos && !isInstalled ? "translate-y-0" : "translate-y-full"
+      } ${className}`}
       {...props}
     >
       <Image

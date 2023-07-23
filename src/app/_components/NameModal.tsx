@@ -5,12 +5,10 @@ import AddToHomeScreen from "./AddToHomeScreen";
 export default function NameModal({
   userName,
   setUserName,
-  userAgent,
   ...props
 }: {
   userName: string;
   setUserName: (userName: string) => void;
-  userAgent: string | null;
   props?: ComponentProps<"div">;
 }) {
   const [naming, setNaming] = useState(true);
@@ -65,9 +63,7 @@ export default function NameModal({
           </button>
         </form>
       </Modal>
-      {userAgent?.includes("iPhone") || userAgent?.includes("iPad") ? (
-        <AddToHomeScreen className={naming ? "" : "hidden"}></AddToHomeScreen>
-      ) : null}
+      <AddToHomeScreen className={naming ? "" : "hidden"}></AddToHomeScreen>
     </>
   );
 }

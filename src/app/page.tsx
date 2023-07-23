@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { headers } from "next/headers";
 import Place from "./_components/Place";
 
 export const metadata: Metadata = {
@@ -20,11 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const userAgent = headers().get("user-agent");
-
   return (
     <main className="font-['Trebuchet_MS']">
-      <Place userAgent={userAgent}></Place>
+      <Place></Place>
     </main>
   );
 }

@@ -7,6 +7,6 @@ html {
   left: 0;
   top: 0;
   height: 100vh;
-  height: -webkit-fill-available !important;
+  height: -webkit-fill-available;
   overflow: hidden;
 }
