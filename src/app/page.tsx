@@ -4,6 +4,10 @@ import Place from "./_components/Place";
 export const metadata: Metadata = {
   title: "An r/place Clone | by Anthony Du",
   description: "A realtime r/place clone with live chat, made by Anthony Du.",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "dimgray" },
+    { media: "(prefers-color-scheme: light)", color: "white" },
+  ],
   openGraph: {
     title: "An r/place Clone",
     description: "A realtime r/place clone with live chat, made by Anthony Du.",
@@ -15,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  appleWebApp: true,
+  appleWebApp: { capable: true, title: "r/place", statusBarStyle: "default" },
   manifest: "/manifest.json",
 };
 

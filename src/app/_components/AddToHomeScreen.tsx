@@ -32,7 +32,7 @@ export default function AddToHomeScreen({
         priority={true}
       ></Image>
       <p>
-        {"This app can be added to your home screen. Just tap "}
+        {"This app can be installed onto your device. Just tap "}
         <ShareIcon className="inline-block"></ShareIcon>
         {" and then Add to Home Screen "}
         <PlusAppIcon className="inline-block"></PlusAppIcon>

@@ -28,6 +28,7 @@ export default function NameModal({
           </label>
           <input
             type="text"
+            id="name"
             name="name"
             autoComplete="name"
             value={userName}
@@ -37,7 +38,7 @@ export default function NameModal({
                 e.currentTarget.nextSibling?.remove();
               }
             }}
-            className="invalid:border-red rounded border px-1 text-2xl"
+            className="rounded border px-1 text-2xl"
             autoFocus
           />
           <button
