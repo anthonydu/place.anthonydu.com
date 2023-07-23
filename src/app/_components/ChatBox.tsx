@@ -31,7 +31,7 @@ export default function ChatBox({
   return (
     <>
       <button
-        className="absolute bottom-6 left-6 rounded-full bg-white p-1 font-semibold shadow-md transition-all"
+        className="absolute bottom-bottom-safe-6 left-6 rounded-full bg-white p-1 font-semibold shadow-md transition-all"
         onClick={() => setChatting(!chatting)}
         aria-label="Chat"
       >

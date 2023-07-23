@@ -45,7 +45,7 @@ export default function ColorPicker({
   return (
     <>
       <button
-        className={`absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
+        className={`absolute bottom-bottom-safe-6 left-1/2 -translate-x-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
         onClick={() => setPicking(true)}
       >
         Place&nbsp;a&nbsp;Pixel

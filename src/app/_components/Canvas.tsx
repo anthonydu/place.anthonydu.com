@@ -120,7 +120,7 @@ export default function Canvas({
         ></Select>
       </TransformComponent>
       <p
-        className={`absolute left-1/2 top-6 -translate-x-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
+        className={`absolute left-1/2 top-top-safe-6 -translate-x-1/2 rounded-full bg-white px-10 py-1 font-semibold shadow-md`}
       >
         ({select.x},{select.y})&nbsp;{scale}x
       </p>

@@ -7,11 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+      inset: {
+        "top-safe-6": ["theme(inset.6)", "calc(env(safe-area-inset-top) + 1.5rem)"],
+        "bottom-safe-6": ["theme(inset.6)", "calc(env(safe-area-inset-bottom) + theme(inset.6))"]
+      }
     },
   },
   plugins: [],
