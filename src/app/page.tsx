@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   appleWebApp: true,
+  manifest: "/manifest.json",
 };
 
 export default function Home() {
