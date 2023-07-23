@@ -1,19 +1,23 @@
-import { RefObject, forwardRef } from "react";
+import { ComponentProps, useState } from "react";
 import Modal from "./Modal";
+import AddToHomeScreen from "./AddToHomeScreen";
 
-const NameModal = forwardRef<HTMLDialogElement, any>(
-  (
-    {
-      userName,
-      setUserName,
-    }: {
-      userName: string;
-      setUserName: (userName: string) => void;
-    },
-    ref,
-  ) => {
-    return (
-      <Modal ref={ref}>
+export default function NameModal({
+  userName,
+  setUserName,
+  userAgent,
+  ...props
+}: {
+  userName: string;
+  setUserName: (userName: string) => void;
+  userAgent: string | null;
+  props?: ComponentProps<"div">;
+}) {
+  const [naming, setNaming] = useState(true);
+
+  return (
+    <>
+      <Modal className={naming ? "" : "hidden"} {...props}>
         <form
           className="flex flex-col items-center gap-4"
           onSubmit={(e) => e.preventDefault()}
@@ -39,11 +43,11 @@ const NameModal = forwardRef<HTMLDialogElement, any>(
             autoFocus
           />
           <button
-            className="rounded border px-2 transition-all hover:border-black"
+            className="rounded-md border px-3 py-1 transition-all hover:bg-gray-100"
             type="submit"
             onClick={(e) => {
               if (userName !== "") {
-                (ref as RefObject<HTMLDialogElement>).current?.close();
+                setNaming(false);
               } else if (e.currentTarget.previousSibling?.nodeName !== "P") {
                 (
                   e.currentTarget.previousSibling as HTMLElement
@@ -61,10 +65,9 @@ const NameModal = forwardRef<HTMLDialogElement, any>(
           </button>
         </form>
       </Modal>
-    );
-  },
-);
-
-NameModal.displayName = "NameModal";
-
-export default NameModal;
+      {userAgent?.includes("iPhone") || userAgent?.includes("iPad") ? (
+        <AddToHomeScreen className={naming ? "" : "hidden"}></AddToHomeScreen>
+      ) : null}
+    </>
+  );
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Canvas from "./Canvas";
 import ChatBox from "./ChatBox";
 import ColorPicker from "./ColorPicker";
@@ -22,15 +22,14 @@ async function getPublicIpAddress() {
   }
 }
 
-export default function Place() {
+export default function Place({ userAgent }: { userAgent: string | null }) {
   const [userName, setUserName] = useState("");
   // coords of pixel selected
   const [select, setSelect] = useState({ x: 0, y: 0 });
   // database change listener
   const [changeListener, setChangeListener] = useState<any>();
-  // refs to modals
-  const disconnectRef = useRef<HTMLDialogElement>(null);
-  const nameRef = useRef<HTMLDialogElement>(null);
+  // states for disconnect modal
+  const [disconnected, setDisconnected] = useState(false);
 
   // subscribe to all public database changes
   supabase
@@ -42,9 +41,9 @@ export default function Place() {
 
   // show disconnect modal for three seconds
   function handleDisconnect() {
-    disconnectRef.current?.showModal();
+    setDisconnected(true);
     setTimeout(() => {
-      disconnectRef.current?.close();
+      setDisconnected(false);
     }, 3000);
   }
 
@@ -84,7 +83,7 @@ export default function Place() {
   async function fetchCanvas() {
     const { data, error } = await supabase.rpc("latest_canvas");
     console.log("Fetched canvas:", data, error);
-    if (data === null) disconnectRef.current?.showModal();
+    if (data === null) setDisconnected(true);
     return data;
   }
 
@@ -92,13 +91,12 @@ export default function Place() {
   async function fetchMessages() {
     const { data, error } = await supabase.rpc("messages_desc").limit(20);
     console.log("Fetched messages:", data, error);
-    if (data === null) disconnectRef.current?.showModal();
+    if (data === null) setDisconnected(true);
     return data;
   }
 
   // show name modal on load
   useEffect(() => {
-    nameRef.current?.showModal();
     document.addEventListener("visibilitychange", () => {
       setChangeListener(document.visibilityState);
     });
@@ -129,12 +127,12 @@ export default function Place() {
       ></ColorPicker>
 
       <NameModal
-        ref={nameRef}
         userName={userName}
         setUserName={setUserName}
+        userAgent={userAgent}
       ></NameModal>
 
-      <Modal ref={disconnectRef}>
+      <Modal className={disconnected ? "" : "hidden"}>
         <div className="flex flex-col items-center gap-2">
           <p className="text-center">
             Connection failed!
