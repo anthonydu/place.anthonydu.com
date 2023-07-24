@@ -32,7 +32,7 @@ export default function ChatBox({
     <>
       <button
         className="absolute bottom-bottom-safe-6 left-6 rounded-full bg-white p-1 font-semibold shadow-md transition-all"
-        onClick={() => setChatting(!chatting)}
+        onClick={() => setChatting((prev) => !prev)}
         aria-label="Chat"
       >
         <ChatIcon className="h-6 w-6"></ChatIcon>
