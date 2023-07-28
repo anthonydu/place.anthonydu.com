@@ -7,7 +7,7 @@ html {
   width: 100vw;
   height: 100vh;
   height: calc(100svh + env(safe-area-inset-top));
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: "Trebuchet MS", theme("fontFamily.sans");
 }
 
 body {

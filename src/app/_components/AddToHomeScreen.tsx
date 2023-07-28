@@ -18,7 +18,7 @@ export default function AddToHomeScreen({
 
   return (
     <div
-      className={`fixed bottom-0 left-1/2 flex w-screen -translate-x-1/2 flex-row items-center justify-center gap-3 border-t bg-white p-4 font-[-apple-system] font-light transition-all ${
+      className={`fixed bottom-0 left-1/2 flex w-screen -translate-x-1/2 flex-row items-center justify-center gap-3 border-t bg-white p-4 font-[-apple-system,theme("fontFamily.sans")] font-light transition-all ${
         isIos && !isInstalled ? "translate-y-0" : "translate-y-full"
       } ${className}`}
       {...props}
