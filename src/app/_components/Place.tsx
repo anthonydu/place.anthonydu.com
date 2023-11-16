@@ -7,6 +7,7 @@ import ColorPicker from "./ColorPicker";
 import Modal from "./Modal";
 import NameModal from "./NameModal";
 import { createClient } from "@supabase/supabase-js";
+import Share from "./Share";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -125,6 +126,8 @@ export default function Place() {
       <ColorPicker
         onPick={(color: number) => insertCanvas(select.x, select.y, color)}
       ></ColorPicker>
+
+      <Share></Share>
 
       <NameModal userName={userName} setUserName={setUserName}></NameModal>
 
