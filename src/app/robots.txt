@@ -9,7 +9,10 @@ Disallow: /
 User-agent: archive.org_bot
 Disallow: /
 
-User-agent: Googlebot
+User-agent: googlebot
+Allow: /
+
+User-agent: bingbot
 Allow: /
 
 Sitemap: https://place.anthonydu.com/sitemap.xml

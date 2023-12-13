@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   robots: {
     index: false,
     follow: false,
+    noarchive: true,
+    noimageindex: true,
     googleBot: {
       index: true,
-      follow: true,
-      noarchive: true,
     },
   },
 };
