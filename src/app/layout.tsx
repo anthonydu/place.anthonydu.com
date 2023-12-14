@@ -5,13 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://place.anthonydu.com"),
   robots: {
-    index: false,
     follow: false,
     noarchive: true,
     noimageindex: true,
-    googleBot: {
-      index: true,
-    },
   },
 };
 

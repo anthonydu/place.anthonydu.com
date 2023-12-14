@@ -15,4 +15,4 @@ Allow: /
 User-agent: bingbot
 Allow: /
 
-Sitemap: https://place.anthonydu.com/sitemap.xml
+Sitemap: /sitemap.xml
