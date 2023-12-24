@@ -21,15 +21,16 @@ export default function RootLayout({
       <body>
         {children}
 
-        {/* Default Statcounter code for r/place https://place.anthonydu.com */}
-        <Script id="statcounter">
+        {/* <!-- Default Statcounter code for anthonydu.com --> */}
+        <Script type="text/javascript" id="statcounter">
           {`
-          var sc_project=12901741; 
-          var sc_invisible=1; 
-          var sc_security="4f65a7c4";
-        `}
+            var sc_project=12802423; 
+            var sc_invisible=1; 
+            var sc_security="b192c111";
+          `}
         </Script>
         <Script
+          type="text/javascript"
           src="https://www.statcounter.com/counter/counter.js"
           async
         ></Script>
@@ -42,26 +43,15 @@ export default function RootLayout({
         ></Script>
         <Script id="ga4">
           {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag("js", new Date());
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
 
-          gtag("config", "G-0X7HCECWPX");
-        `}
+            gtag("config", "G-0X7HCECWPX");
+          `}
         </Script>
-
-        <Script
-          async
-          data-id="101416538"
-          src="//static.getclicky.com/js"
-        ></Script>
-        <Script
-          data-goatcounter="https://anthonydu.goatcounter.com/count"
-          async
-          src="//gc.zgo.at/count.js"
-        ></Script>
       </body>
     </html>
   );
